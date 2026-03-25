@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NOVA CHEN · 科幻产品集</title>
+  <!-- 引入现代字体 Inter & 等宽点缀 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #07080c;
+      font-family: 'Inter', sans-serif;
+      color: #e0e4f0;
+      line-height: 1.5;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* 动态网格背景 + 光晕 */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-image: 
+        linear-gradient(rgba(20, 180, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(20, 180, 255, 0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      top: -30%; left: -20%;
+      width: 140%; height: 140%;
+      background: radial-gradient(circle at 30% 40%, rgba(0, 180, 255, 0.08) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 70%, rgba(170, 0, 255, 0.06) 0%, transparent 55%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 5;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem;
+    }
+
+    /* 科幻风格排版 */
+    .glow-text {
+      text-shadow: 0 0 12px rgba(0, 255, 255, 0.6), 0 0 25px rgba(0, 140, 255, 0.4);
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 2rem;
+      display: inline-block;
+      background: linear-gradient(135deg, #fff, #a0d0ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      border-left: 4px solid #2ad4ff;
+      padding-left: 1.5rem;
+      box-shadow: -10px 0 30px -10px #00ccff33;
+    }
+
+    /* 卡片通用设计 */
+    .card {
+      background: rgba(12, 18, 30, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(0, 255, 255, 0.15);
+      border-radius: 28px;
+      padding: 2rem 1.8rem;
+      transition: transform 0.2s ease, border-color 0.2s, box-shadow 0.3s;
+      box-shadow: 0 15px 35px -15px rgba(0,0,0,0.7), 0 0 0 1px rgba(0, 255, 255, 0.1) inset;
+    }
+
+    .card:hover {
+      border-color: #00ffff80;
+      box-shadow: 0 20px 40px -15px #00b7ff4d, 0 0 0 1.5px #00e0ff inset;
+      transform: translateY(-4px);
+    }
+
+    /* 网格布局 */
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.8rem;
+      margin-top: 1rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin: 2.5rem 0 2rem;
+    }
+
+    /* 数字/装饰标记 */
+    .accent-chip {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      background: rgba(0, 255, 255, 0.1);
+      color: #7efff0;
+      border: 1px solid #00e6ff;
+      border-radius: 40px;
+      padding: 0.2rem 1rem;
+      display: inline-block;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+      box-shadow: 0 0 8px cyan;
+    }
+
+    .stat-number {
+      font-size: 2.3rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #fff, #72e4ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.2;
+      font-family: 'Space Mono', monospace;
+    }
+
+    /* 头部区域 */
+    .hero {
+      margin-bottom: 4rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 1px dashed rgba(0, 255, 255, 0.3);
+      padding-bottom: 2rem;
+    }
+
+    .hero-main h1 {
+      font-size: 4.2rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      background: linear-gradient(145deg, #f0f9ff, #a2d9ff, #ffffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 20px #0af, 0 0 40px #004cff;
+      line-height: 1.1;
+    }
+
+    .hero-main .subhead {
+      font-size: 1.4rem;
+      color: #b2d9ff;
+      margin-top: 0.5rem;
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-taglist {
+      display: flex;
+      gap: 1.2rem;
+      font-family: 'Space Mono', monospace;
+      color: #5ad0ff;
+      font-size: 1rem;
+      background: rgba(0, 30, 50, 0.6);
+      backdrop-filter: blur(5px);
+      padding: 0.8rem 2rem;
+      border-radius: 60px;
+      border: 1px solid cyan;
+    }
+
+    /* 能力卡片内小列表 */
+    .feature-list {
+      list-style: none;
+      margin-top: 1.2rem;
+    }
+
+    .feature-list li {
+      margin-bottom: 0.8rem;
+      font-size: 0.95rem;
+      display: flex;
+      gap: 0.7rem;
+      align-items: flex-start;
+      color: #cbd5f0;
+    }
+
+    .feature-list li::before {
+      content: "▹";
+      color: #0ff;
+      font-weight: bold;
+      text-shadow: 0 0 8px cyan;
+    }
+
+    .badge-light {
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 0.2rem 0.8rem;
+      font-size: 0.7rem;
+      border: 1px solid #00e6ff80;
+      color: #b0f0ff;
+      margin-left: 0.5rem;
+    }
+
+    /* 项目卡片头部 */
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      margin-bottom: 1.2rem;
+    }
+
+    .project-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, #fff, #aadcff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .project-date {
+      font-family: 'Space Mono', monospace;
+      color: #2ad4ff;
+      background: #0f2633;
+      padding: 0.3rem 1rem;
+      border-radius: 20px;
+      border: 1px solid cyan;
+      font-size: 0.8rem;
+    }
+
+    .project-highlight {
+      font-size: 0.95rem;
+      margin: 1.2rem 0 0.8rem;
+      background: rgba(0, 255, 200, 0.05);
+      padding: 1rem;
+      border-radius: 16px;
+      border-left: 3px solid cyan;
+    }
+
+    /* 成果卡片 */
+    .achievement-card {
+      background: rgba(8, 15, 26, 0.8);
+      backdrop-filter: blur(4px);
+      border: 1px solid #0cf3;
+      border-radius: 28px;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .achievement-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      filter: drop-shadow(0 0 10px cyan);
+    }
+
+    /* 响应式 */
+    @media (max-width: 1024px) {
+      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+      .hero-main h1 { font-size: 3.2rem; }
+    }
+
+    @media (max-width: 700px) {
+      .grid-4, .grid-3 { grid-template-columns: 1fr; }
+      .hero { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+      .hero-taglist { align-self: flex-start; }
+      .wrapper { padding: 1.8rem 1.2rem; }
+    }
+
+    /* 点缀扫描线 */
+    .scan-line {
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #0ff, #a0f, transparent);
+      margin: 3rem 0 2rem;
+      opacity: 0.5;
+    }
+
+    /* 标签云 */
+    .tech-tag {
+      display: inline-block;
+      background: rgba(0, 200, 255, 0.08);
+      border: 1px solid #00b8ff80;
+      border-radius: 30px;
+      padding: 0.3rem 1rem;
+      font-size: 0.8rem;
+      margin: 0.25rem 0.25rem;
+      color: #8dc9ff;
+    }
+
+    .footer-note {
+      margin-top: 5rem;
+      text-align: center;
+      opacity: 0.5;
+      font-size: 0.8rem;
+      font-family: monospace;
+      letter-spacing: 1.5px;
+      border-top: 1px dashed #0cf3;
+      padding-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+  <div class="wrapper">
+  <!-- 新增返回首页按钮 -->
+  <button style="
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    z-index: 99;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.9rem;
+    padding: 0.6rem 1.5rem;
+    background: rgba(12, 18, 30, 0.75);
+    color: #00ffff;
+    border: 1px solid #00ffff80;
+    border-radius: 40px;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: all 0.2s ease;
+  " onclick="window.location.href='index.html'">
+    ← 返回首页
+  </button>
+
+    <!-- 头部 -->
+    <div class="hero">
+      <div class="hero-main">
+        <h1>杨可一 One <span style="font-size: 2rem;">⍟</span></h1>
+        <div class="subhead">
+          <span>软硬件产品经理</span>
+          <span>✦</span>
+          <span>4年复合成长</span>
+          <span>✦</span>
+          <span>全链路闭环</span>
+        </div>
+      </div>
+      <div class="hero-taglist">
+        <span>AR/MR</span>
+        <span>·</span>
+        <span>消费电子</span>
+        <span>·</span>
+        <span>工业智能</span>
+        <span>·</span>
+        <span>AI融合</span>
+      </div>
+    </div>
+
+    <!-- 核心产品能力沉淀 (4大能力) -->
+    <div>
+      <span class="accent-chip">⟡ 全生命周期方法论 ⟡</span>
+      <h2 class="section-title">核心产品能力沉淀</h2>
+    </div>
+    <div class="grid-4">
+      <!-- 能力1 -->
+      <div class="card">
+        <span style="font-size: 2.2rem; opacity: 0.7;">01</span>
+        <h3 style="font-size: 1.5rem; margin: 0.5rem 0 0.2rem; ">需求洞察·分析</h3>
+        <div style="color: #8ec9ff; font-size: 0.9rem;">To B/G + To C 双端穿透</div>
+        <ul class="feature-list">
+          <li>穿透表层需求，锁定核心痛点</li>
+          <li>需求匹配度 95%<span class="badge-light">top tier</span></li>
+          <li>可落地需求方案，0概念漂移</li>
+        </ul>
+      </div>
+      <!-- 能力2 -->
+      <div class="card">
+        <span style="font-size: 2.2rem; opacity: 0.7;">02</span>
+        <h3 style="font-size: 1.5rem; margin: 0.5rem 0 0.2rem;">产品规划·设计</h3>
+        <div style="color: #8ec9ff; font-size: 0.9rem;">MRD/PRD · Axure高保真</div>
+        <ul class="feature-list">
+          <li>硬件+软件APP+MR解决方案从0到1</li>
+          <li>技术可行性×用户体验×商业价值</li>
+          <li>产品路线图&版本节奏</li>
+        </ul>
+      </div>
+      <!-- 能力3 -->
+      <div class="card">
+        <span style="font-size: 2.2rem; opacity: 0.7;">03</span>
+        <h3 style="font-size: 1.5rem; margin: 0.5rem 0 0.2rem;">项目管理·协作</h3>
+        <div style="color: #8ec9ff; font-size: 0.9rem;">敏捷·跨职能统筹</div>
+        <ul class="feature-list">
+          <li>设计/研发/测试/供应链整合</li>
+          <li>交付周期缩短20%<span class="badge-light">流程优化</span></li>
+          <li>风险预判 & 卡点解决</li>
+        </ul>
+      </div>
+      <!-- 能力4 -->
+      <div class="card">
+        <span style="font-size: 2.2rem; opacity: 0.7;">04</span>
+        <h3 style="font-size: 1.5rem; margin: 0.5rem 0 0.2rem;">数据驱动·迭代</h3>
+        <div style="color: #8ec9ff; font-size: 0.9rem;">监控·反馈·闭环</div>
+        <ul class="feature-list">
+          <li>数据监控 + 用户反馈体系</li>
+          <li>需求优先级排序&效果验证</li>
+          <li>业务目标提升实证</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 扫描线装饰 -->
+    <div class="scan-line"></div>
+
+    <!-- 核心赛道项目经验 (三大领域) -->
+    <div style="margin-top: 2rem;">
+      <span class="accent-chip">⍟ 进阶 · 三大核心赛道 ⍟</span>
+      <h2 class="section-title">项目实战 · 从0到1及规模化</h2>
+    </div>
+
+    <div class="grid-3">
+      <!-- AR/MR 文旅数字化 -->
+      <div class="card">
+        <div class="project-header">
+          <span class="project-title">AR/MR 文旅</span>
+          <span class="project-date">2023.09 – 至今</span>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem;">
+          <span class="tech-tag">洪崖洞</span>
+          <span class="tech-tag">三星堆</span>
+          <span class="tech-tag">千户苗寨</span>
+          <span class="tech-tag">九龙坡</span>
+        </div>
+        <p style="color: #b2d4ff; margin-bottom: 1rem;">政府/景区/文旅集团 · 沉浸式MR数字化</p>
+        <div class="project-highlight">
+          <div><span class="stat-number">2000</span> 万+ 签约总额</div>
+          <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
+            <span>游客满意度 ↑30%</span>
+            <span>二次访问 ↑25%</span>
+          </div>
+        </div>
+        <ul class="feature-list" style="margin-top: 0.5rem;">
+          <li>主导需求挖掘、方案设计、全流程交付</li>
+          <li>To C元宇宙社交APP 高保真原型</li>
+        </ul>
+      </div>
+
+      <!-- 消费电子硬件赛道 -->
+      <div class="card">
+        <div class="project-header">
+          <span class="project-title">消费电子硬件</span>
+          <span class="project-date">2021.07 – 2022.03</span>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem;">
+          <span class="tech-tag">悦刻</span>
+          <span class="tech-tag">小野</span>
+          <span class="tech-tag">柚子</span>
+          <span class="tech-tag">ODM/OEM</span>
+        </div>
+        <p style="color: #b2d4ff; margin-bottom: 1rem;">头部品牌全生命周期管理</p>
+        <div class="project-highlight">
+          <div>成本 <span class="stat-number">↓18%</span>  ·  利润 +500万</div>
+          <div style="margin-top: 0.4rem;">中性产品营收 <span class="stat-number">2000万</span> /年</div>
+        </div>
+        <ul class="feature-list">
+          <li>市场调研→MRD/PRD→研发供应链</li>
+          <li>0到1落地中性产品</li>
+        </ul>
+      </div>
+
+      <!-- 工业智能产品赛道 -->
+      <div class="card">
+        <div class="project-header">
+          <span class="project-title">工业智能 · 矿山</span>
+          <span class="project-date">2022.04 – 2023.01</span>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem;">
+          <span class="tech-tag">声光报警器</span>
+          <span class="tech-tag">安标认证</span>
+          <span class="tech-tag">信息互联网</span>
+        </div>
+        <p style="color: #b2d4ff;">智能矿山 · 从0到1产品落地</p>
+        <div class="project-highlight">
+          产品稳定性 <span class="stat-number">↑50%</span>  ·  多矿山落地
+        </div>
+        <ul class="feature-list">
+          <li>MRD/PRD、企业标准、国家安标认证</li>
+          <li>故障复现协同优化，降低停机</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 核心商业成果 + 岗位适配价值  -->
+    <div style="margin: 3rem 0 1rem;">
+      <span class="accent-chip">◈ 商业闭环 · 硬核成果 ◈</span>
+      <h2 class="section-title">价值交付 & 岗位适配</h2>
+    </div>
+
+    <div class="grid-3" style="margin-top: 1.5rem;">
+      <!-- 商业化落地 -->
+      <div class="achievement-card">
+        <div class="achievement-icon">💼💰</div>
+        <h3 style="font-size: 1.9rem; font-weight: 600; letter-spacing: -0.02em;">商业化落地</h3>
+        <div style="margin: 1rem 0;">
+          <span class="stat-number" style="font-size: 3rem;">2000</span> <span style="color: #0ff;">万+</span>
+        </div>
+        <p style="color: #b0d0ff;">主导/参与签约项目总金额超2000万，客户涵盖头部景区、政府、消费电子头部品牌，满意度95%+，精准把握商业价值闭环。</p>
+        <div style="margin-top: 1rem;">
+          <span class="tech-tag">政府/文旅</span>
+          <span class="tech-tag">悦刻/小野</span>
+          <span class="tech-tag">高续约率</span>
+        </div>
+      </div>
+
+      <!-- 前沿技术融合 -->
+      <div class="achievement-card">
+        <div class="achievement-icon">🧠⚡</div>
+        <h3 style="font-size: 1.9rem;">前沿技术融合</h3>
+        <div style="display: flex; gap: 1rem; margin: 1rem 0; flex-wrap: wrap;">
+          <span class="tech-tag" style="font-size: 1rem;">AIGC</span>
+          <span class="tech-tag" style="font-size: 1rem;">AR/MR/VR</span>
+          <span class="tech-tag" style="font-size: 1rem;">实体场景</span>
+        </div>
+        <p style="color: #b0d0ff;">精通AIGC、混合现实与文旅/工业场景融合，打造差异化体验。完全匹配ARVR产品经理核心要求，技术边界把握精准。</p>
+        <p style="margin-top: 0.8rem; border-left: 2px solid cyan; padding-left: 1rem;">✨ 三星堆MR导览 · 声光报警AI预警</p>
+      </div>
+
+      <!-- 复合背景优势 -->
+      <div class="achievement-card">
+        <div class="achievement-icon">🔗🧩</div>
+        <h3 style="font-size: 1.9rem;">软硬复合背景</h3>
+        <div style="margin: 1rem 0; display: flex; gap: 0.5rem;">
+          <span class="stat-number" style="font-size: 2rem;">To B</span><span style="color: #0ff;">+</span><span class="stat-number" style="font-size: 2rem;">To C</span>
+        </div>
+        <p style="color: #b0d0ff;">软硬件结合产品经验，高效协同技术团队，从技术可行性到用户体验全把控，杜绝自嗨式设计。兼具商业价值与体验细节。</p>
+        <ul class="feature-list" style="margin-top: 1rem;">
+          <li>硬件ID/MD/电子协同</li>
+          <li>APP/小程序/后台数据闭环</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 额外数据 & 标签云 强化科幻感 -->
+    <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: space-between; background: rgba(0,255,255,0.02); border-radius: 48px; padding: 2rem; margin-top: 2.5rem; border: 1px solid cyan; backdrop-filter: blur(4px);">
+      <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+        <div><span class="stat-number">10+</span> <span style="color: #aad0ff;">0-1产品落地</span></div>
+        <div><span class="stat-number">95%</span> <span style="color: #aad0ff;">需求匹配度</span></div>
+        <div><span class="stat-number">18%</span> <span style="color: #aad0ff;">成本优化</span></div>
+        <div><span class="stat-number">30%</span> <span style="color: #aad0ff;">体验提升</span></div>
+      </div>
+      <div style="font-family: 'Space Mono'; color: #7ee0ff;">// full-cycle · 闭环数据驱动</div>
+    </div>
+
+    <!-- 微脚注 -->
+    <div class="footer-note">
+      <span>⏣ 产品全生命周期 · 软硬件+数字化落地 · 商业闭环 ⏣</span><br />
+      <span style="color: #00ccaa;">NOVA CHEN · 科幻产品架构 · v2.0.25</span>
+    </div>
+  </div> <!-- end wrapper -->
+</body>
+</html>
