@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>售前产品经理 | 解决方案作品集</title>
+<title>One的作品集 | 售前产品经理</title>
 
 <style>
 * {
@@ -17,117 +17,260 @@ html {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  background: #f8fafc;
-  color: #1e293b;
-  line-height: 1.7;
-  overflow-x: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: linear-gradient(135deg, #FDE8D3, #DAEBE3, #99CDD8);
+  color: #657166;
+  line-height: 1.6;
+  overflow: hidden;
+  height: 100vh;
+  font-weight: 400;
 }
 
-/* 导航 */
+/* ====================== 新增：滚动进度条 ====================== */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, #99CDD8, #DAEBE3);
+  z-index: 9999;
+  transition: width 0.1s ease-out;
+}
+
+/* ====================== 新增：滚动动画核心样式 ====================== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: none;
+}
+
+.scroll-animate.active {
+  animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* 错开入场延迟 */
+.stagger-1 { animation-delay: 0.1s !important; }
+.stagger-2 { animation-delay: 0.2s !important; }
+.stagger-3 { animation-delay: 0.3s !important; }
+
+/* 首屏hero初始动画 */
+.hero-animate {
+  animation: fadeInUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+.hero-animate.subtitle { animation-delay: 0.1s; }
+.hero-animate.title { animation-delay: 0.3s; }
+.hero-animate.desc { animation-delay: 0.5s; }
+.hero-animate.btn-group { animation-delay: 0.7s; }
+
+/* ====================== 柔色背景 ====================== */
+#bg-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+}
+
+/* ====================== 3D 场景容器 ====================== */
+.scene-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  perspective: 2000px;
+  overflow: hidden;
+}
+
+/* ====================== 主页面 ====================== */
+.main-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-style: preserve-3d;
+  z-index: 1;
+}
+
+.main-page.back {
+  transform: translateX(35%) translateY(5%) scale(0.65) rotateY(-10deg);
+  opacity: 0.35;
+  filter: blur(4px);
+  pointer-events: none;
+}
+
+/* ====================== 导航栏（新增滚动变化样式） ====================== */
 nav {
   position: fixed;
   width: 100%;
   top: 0;
-  padding: 20px 60px;
+  padding: 20px 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
+  background: rgba(101, 113, 102, 0.85);
+  backdrop-filter: saturate(180%) blur(20px);
   z-index: 999;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
+  border-bottom: 1px solid rgba(153, 205, 216, 0.1);
+  transition: all 0.3s ease;
+}
+
+/* 滚动后的导航样式 */
+nav.scrolled {
+  padding: 12px 80px;
+  background: rgba(101, 113, 102, 0.95);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 nav h1 {
-  font-size: 20px;
+  font-size: 21px;
   font-weight: 600;
-  color: #0f172a;
+  letter-spacing: -0.3px;
+  color: #FDE8D3;
 }
 
 nav a {
-  margin-left: 28px;
-  color: #475569;
+  margin-left: 40px;
+  color: #DFD6C4;
   text-decoration: none;
-  font-size: 15px;
-  transition: 0.3s;
+  font-size: 14px;
+  font-weight: 400;
+  transition: all 0.3s;
+  cursor: pointer;
 }
 
 nav a:hover {
-  color: #3b82f6;
+  color: #99CDD8;
 }
 
 /* 通用区块 */
 .section {
-  padding: 110px 60px;
-  max-width: 1200px;
+  padding: 140px 80px;
+  max-width: 1280px;
   margin: 0 auto;
 }
 
-.section h3 {
-  font-size: 32px;
-  margin-bottom: 50px;
+.section-title {
+  font-size: 48px;
   font-weight: 600;
-  color: #0f172a;
+  letter-spacing: -1px;
+  margin-bottom: 80px;
+  text-align: center;
+  color: #657166;
 }
 
-/* 第一页：首页 */
+/* ====================== 首页 Hero ====================== */
 .hero {
   height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0 60px;
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  padding: 0 80px;
   text-align: center;
+  position: relative;
+}
+
+.hero-subtitle {
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: #657166;
+  margin-bottom: 20px;
+  font-weight: 500;
+  text-transform: uppercase;
 }
 
 .hero h2 {
-  font-size: 56px;
-  line-height: 1.2;
-  margin-bottom: 24px;
+  font-size: 80px;
   font-weight: 700;
-  color: #0f172a;
+  letter-spacing: -2px;
+  margin-bottom: 24px;
+  color: #657166;
 }
 
 .hero p {
-  color: #64748b;
-  max-width: 600px;
-  font-size: 18px;
-  margin: 0 auto;
+  font-size: 20px;
+  color: #657166;
+  opacity: 0.8;
+  margin-bottom: 48px;
+  font-weight: 400;
+  max-width: 580px;
+  line-height: 1.7;
 }
 
-/* 第二页：3D旋转卡片环 - 透视版 */
+.hero-btn-container {
+  display: flex;
+  gap: 20px;
+}
+
+.hero-btn {
+  font-size: 15px;
+  padding: 16px 44px;
+  background: #99CDD8;
+  color: #657166;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.hero-btn:hover {
+  background: #DAEBE3;
+  transform: translateY(-2px);
+}
+
+.hero-btn-secondary {
+  font-size: 15px;
+  padding: 16px 44px;
+  background: transparent;
+  color: #657166;
+  border: 1px solid #657166;
+  border-radius: 100px;
+  cursor: pointer;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.hero-btn-secondary:hover {
+  border-color: #99CDD8;
+  color: #99CDD8;
+  background: rgba(153, 205, 216, 0.1);
+}
+
+/* ====================== 核心能力 3D 环 ====================== */
 .scene-3d {
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #ffffff;
   position: relative;
-  overflow: hidden;
-}
-
-.scene-title {
-  text-align: center;
-  margin-bottom: 80px;
-  z-index: 10;
-}
-
-.scene-title h3 {
-  font-size: 32px;
-  margin-bottom: 10px;
-}
-
-.scene-title p {
-  color: #64748b;
 }
 
 .carousel-container {
-  width: 220px;
-  height: 300px;
-  perspective: 1800px; /* 增强透视效果 */
+  width: 240px;
+  height: 320px;
+  perspective: 2200px;
 }
 
 .carousel {
@@ -135,704 +278,794 @@ nav a:hover {
   height: 100%;
   position: relative;
   transform-style: preserve-3d;
-  transform: rotateX(-15deg); /* 稍微向下倾斜视角 */
-  animation: rotate3d 20s infinite linear;
+  transform: rotateX(-10deg);
+  animation: rotate3d 25s infinite linear;
 }
 
 .carousel-item {
   position: absolute;
-  width: 220px;
-  height: 300px;
+  width: 240px;
+  height: 320px;
   left: 0;
   top: 0;
-  background: #fff;
-  border-radius: 20px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 32px;
   text-align: center;
-  border: 1px solid rgba(0,0,0,0.04);
-  backface-visibility: visible; /* 让背面也可见 */
-  opacity: 0.95; /* 基础透明度 */
 }
 
 .carousel-item .icon {
-  width: 60px;
-  height: 60px;
-  border-radius: 16px;
+  width: 64px;
+  height: 64px;
+  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 26px;
-  margin-bottom: 20px;
+  font-size: 28px;
+  margin-bottom: 24px;
+  background: #99CDD8;
   color: #fff;
 }
 
 .carousel-item h4 {
   font-size: 18px;
-  margin-bottom: 10px;
-  color: #0f172a;
+  margin-bottom: 12px;
+  font-weight: 600;
+  color: #657166;
 }
 
 .carousel-item p {
-  font-size: 13px;
-  color: #64748b;
+  font-size: 14px;
+  color: #657166;
+  opacity: 0.7;
   line-height: 1.6;
 }
 
-/* 3D旋转动画 */
 @keyframes rotate3d {
-  from { transform: rotateX(-15deg) rotateY(0deg); }
-  to { transform: rotateX(-15deg) rotateY(360deg); }
+  from { transform: rotateX(-10deg) rotateY(0deg); }
+  to { transform: rotateX(-10deg) rotateY(360deg); }
 }
 
-/* 6个卡片的位置 - 缩小半径让它们更紧凑 */
-.carousel-item:nth-child(1) { transform: rotateY(0deg) translateZ(300px); }
-.carousel-item:nth-child(2) { transform: rotateY(60deg) translateZ(300px); }
-.carousel-item:nth-child(3) { transform: rotateY(120deg) translateZ(300px); }
-.carousel-item:nth-child(4) { transform: rotateY(180deg) translateZ(300px); }
-.carousel-item:nth-child(5) { transform: rotateY(240deg) translateZ(300px); }
-.carousel-item:nth-child(6) { transform: rotateY(300deg) translateZ(300px); }
+.carousel-item:nth-child(1) { transform: rotateY(0deg) translateZ(340px); }
+.carousel-item:nth-child(2) { transform: rotateY(60deg) translateZ(340px); }
+.carousel-item:nth-child(3) { transform: rotateY(120deg) translateZ(340px); }
+.carousel-item:nth-child(4) { transform: rotateY(180deg) translateZ(340px); }
+.carousel-item:nth-child(5) { transform: rotateY(240deg) translateZ(340px); }
+.carousel-item:nth-child(6) { transform: rotateY(300deg) translateZ(340px); }
 
-/* 不同卡片的配色 */
-.carousel-item:nth-child(1) .icon { background: linear-gradient(135deg, #60a5fa, #3b82f6); }
-.carousel-item:nth-child(2) .icon { background: linear-gradient(135deg, #34d399, #10b981); }
-.carousel-item:nth-child(3) .icon { background: linear-gradient(135deg, #a78bfa, #8b5cf6); }
-.carousel-item:nth-child(4) .icon { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
-.carousel-item:nth-child(5) .icon { background: linear-gradient(135deg, #f472b6, #ec4899); }
-.carousel-item:nth-child(6) .icon { background: linear-gradient(135deg, #fb7185, #ef4444); }
-
-/* 第三页：项目案例 */
-.projects {
+/* ====================== 通用卡片网格 ====================== */
+.card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 32px;
 }
 
-.card {
-  background: #fff;
-  border-radius: 18px;
+.general-card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(15px);
+  border-radius: 24px;
   overflow: hidden;
-  transition: 0.35s;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  transition: all 0.3s;
   cursor: pointer;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-  border: 1px solid rgba(0,0,0,0.04);
 }
 
-.card:hover {
+.general-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+  border-color: #99CDD8;
+  background: rgba(255, 255, 255, 0.8);
 }
 
-.card img {
+.general-card-img {
   width: 100%;
-  height: 210px;
-  object-fit: cover;
-  background: #e2e8f0;
+  height: 240px;
+  background-size: cover;
+  background-position: center;
 }
 
-.card-content {
-  padding: 24px;
+.general-card-content {
+  padding: 28px;
 }
 
-.card-content h4 {
-  font-size: 18px;
+.general-card-content h4 {
+  font-size: 20px;
   margin-bottom: 10px;
   font-weight: 600;
-  color: #0f172a;
+  color: #657166;
 }
 
-.card-content p {
-  color: #64748b;
+.general-card-content p {
+  color: #657166;
+  opacity: 0.7;
   font-size: 14px;
   line-height: 1.6;
 }
 
-/* 模态框样式 */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(6px);
-  z-index: 1000;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  opacity: 0;
-  transition: opacity 0.3s;
+/* ====================== 硬件产品双卡片 ====================== */
+.hardware-entry-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
 }
 
-.modal-overlay.active {
-  display: flex;
-  opacity: 1;
-}
-
-.modal {
-  background: #fff;
+.hardware-entry-card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(15px);
   border-radius: 24px;
-  max-width: 900px;
-  width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-  transform: scale(0.9);
-  transition: transform 0.3s;
+  padding: 60px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s;
 }
 
-.modal-overlay.active .modal {
-  transform: scale(1);
+.hardware-entry-card:hover {
+  transform: translateY(-8px);
+  border-color: #F3C3B2;
+  background: rgba(255, 255, 255, 0.8);
 }
 
-/* 模态框轮播样式 */
-.modal-header {
-  position: relative;
-  height: 360px;
+.hardware-entry-card h3 {
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #657166;
 }
 
-.modal-carousel {
-  position: relative;
-  width: 100%;
-  height: 100%;
+.hardware-entry-card p {
+  font-size: 17px;
+  color: #657166;
+  opacity: 0.7;
+  margin-bottom: 24px;
+  line-height: 1.6;
 }
 
-.carousel-slides {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  position: relative;
+.hardware-entry-card .enter-hint {
+  font-size: 15px;
+  color: #99CDD8;
+  font-weight: 500;
 }
 
-.carousel-slide {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
-.carousel-slide.active {
-  opacity: 1;
-}
-
-.carousel-slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* 轮播切换按钮 */
-.carousel-btn {
+/* ====================== 统一浮层 UI ====================== */
+.general-panel {
   position: absolute;
   top: 50%;
+  left: -120%;
+  width: 80%;
+  height: 88%;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(40px);
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  overflow-y: auto;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  z-index: 100;
   transform: translateY(-50%);
-  background: rgba(255,255,255,0.8);
-  border: none;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  font-size: 20px;
-  cursor: pointer;
-  z-index: 10;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  transition: all 0.3s ease;
+  opacity: 0;
 }
 
-.carousel-btn:hover {
-  background: #fff;
+.general-panel.active {
+  left: 4%;
+  opacity: 1;
 }
 
-.carousel-prev {
-  left: 20px;
+/* 浮层滚动条美化 */
+.general-panel::-webkit-scrollbar {
+  width: 8px;
 }
 
-.carousel-next {
-  right: 20px;
+.general-panel::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-/* 轮播指示器 */
-.carousel-indicators {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 8px;
-  z-index: 10;
+.general-panel::-webkit-scrollbar-thumb {
+  background: #DFD6C4;
+  border-radius: 4px;
 }
 
-.indicator-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.6);
-  cursor: pointer;
-  transition: background 0.3s ease;
+.general-panel::-webkit-scrollbar-thumb:hover {
+  background: #99CDD8;
 }
 
-.indicator-dot.active {
-  background: #fff;
-  width: 24px;
-  border-radius: 5px;
+.panel-header {
+  padding: 60px 60px 30px;
 }
 
-.modal-close {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.95);
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  display: flex;
+/* 放大关闭按钮文字 */
+.close-btn {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  transition: 0.3s;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  z-index: 20;
-}
-
-.modal-close:hover {
-  background: #fff;
-  transform: rotate(90deg);
-}
-
-.modal-body {
-  padding: 40px;
-}
-
-.modal-body h2 {
-  font-size: 28px;
-  margin-bottom: 20px;
-  color: #0f172a;
-}
-
-.modal-section {
-  margin-bottom: 30px;
-}
-
-.modal-section h3 {
+  gap: 10px;
   font-size: 18px;
-  margin-bottom: 12px;
-  color: #3b82f6;
-  font-weight: 600;
+  color: #657166;
+  opacity: 0.7;
+  cursor: pointer;
+  margin-bottom: 32px;
+  transition: all 0.3s;
+  font-weight: 500;
 }
 
-.modal-section p, .modal-section li {
-  color: #475569;
+.close-btn:hover {
+  color: #99CDD8;
+  opacity: 1;
+}
+
+.panel-title {
+  font-size: 60px;
+  font-weight: 700;
+  letter-spacing: -1.5px;
+  color: #657166;
+  line-height: 1.1;
+}
+
+.panel-content {
+  padding: 0 60px 80px;
+}
+
+.panel-showcase {
+  display: flex;
+  gap: 60px;
+  margin-bottom: 80px;
+  align-items: flex-start;
+}
+
+.panel-image-large {
+  width: 50%;
+  height: 420px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 24px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.panel-info {
+  width: 50%;
+}
+
+.panel-section {
+  margin-bottom: 32px;
+  padding: 28px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+/* 放大浮窗小标题 */
+.panel-section h4 {
+  font-size: 24px;
+  margin-bottom: 12px;
+  font-weight: 600;
+  color: #99CDD8;
+}
+
+/* 放大浮窗正文/列表文字 */
+.panel-section p, .panel-section li {
+  font-size: 19px;
+  color: #657166;
   line-height: 1.8;
 }
 
-.modal-section ul {
+.panel-section ul {
   padding-left: 20px;
+  margin-top: 8px;
 }
 
-.modal-tags {
+.tags-container {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 10px;
+  margin-top: 12px;
 }
 
+/* 放大标签文字 */
 .tag {
-  padding: 6px 14px;
-  background: #f1f5f9;
-  border-radius: 20px;
-  font-size: 13px;
-  color: #475569;
-}
-
-/* 第四页：关于我 */
-.about-text {
-  max-width: 700px;
+  display: inline-block;
+  padding: 10px 22px;
+  background: rgba(153, 205, 216, 0.15);
+  border: 1px solid rgba(153, 205, 216, 0.3);
+  border-radius: 100px;
   font-size: 16px;
-  color: #475569;
+  color: #657166;
+  font-weight: 500;
+  transition: all 0.3s;
 }
 
-.about-text p {
-  margin-bottom: 12px;
-  padding-left: 12px;
-  border-left: 3px solid #3b82f6;
+.tag:hover {
+  background: rgba(153, 205, 216, 0.3);
 }
 
-/* Footer */
+/* ====================== 关于我 ====================== */
+.about-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.about-item {
+  margin-bottom: 24px;
+  padding: 32px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  transition: all 0.3s;
+}
+
+.about-item:hover {
+  border-color: #F3C3B2;
+}
+
+.about-item p {
+  font-size: 17px;
+  color: #657166;
+  line-height: 1.7;
+}
+
 footer {
-  padding: 50px 30px;
+  padding: 60px 40px;
   text-align: center;
-  color: #94a3b8;
+  color: #657166;
+  opacity: 0.6;
   font-size: 14px;
-  background: #fff;
-  border-top: 1px solid rgba(0,0,0,0.05);
+  border-top: 1px solid rgba(101, 113, 102, 0.1);
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(15px);
 }
 </style>
 </head>
 
 <body>
 
-<nav>
-  <h1>One的作品集（杨可一）</h1>
-  <div>
-    <a href="#home">首页</a>
-    <a href="#scene">核心能力</a>
-    <a href="#projects">项目案例</a>
-    <a href="#about">关于我</a>
-  </div>
-</nav>
+<!-- 新增：滚动进度条 -->
+<div class="scroll-progress" id="scrollProgress"></div>
 
-<!-- 第一页：首页 -->
-<section class="hero" id="home">
-  <div>
-    <h2>市场产品经理<br>产品设计&解决方案</h2>
-    <p>
-      专注XR文旅数字化升级、智慧城市/校园等设计与AI产品解决方案，
-      擅长方案设计、需求梳理与高效商业表达。同时具有硬件产品经验落地经验。
-    </p>
+<!-- 柔色背景 Canvas -->
+<canvas id="bg-canvas"></canvas>
 
-	<!-- 跳转至二级页面的入口按钮 -->
-<button style="
-  font-family: 'Space Mono', monospace;
-  font-size: 1.1rem;
-  font-weight: 700;
-  padding: 1rem 3rem;
-  background: linear-gradient(135deg, #00b7ff, #00ffff);
-  color: #07080c;
-  border: none;
-  border-radius: 60px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.6), 0 5px 15px -5px rgba(0,0,0,0.5);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin: 2rem 0;
-" onclick="window.location.href='One.html'">
-  个人简历 ➤
-</button>
-  </div>
-</section>
+<!-- 3D场景容器 -->
+<div class="scene-container">
+  <!-- 主页面 -->
+  <div class="main-page" id="mainPage">
+    <nav id="mainNav">
+      <h1>One的作品集</h1>
+      <div>
+        <a onclick="scrollToSection('home')">首页</a>
+        <a onclick="scrollToSection('scene')">核心能力</a>
+        <a onclick="scrollToSection('projects')">核心项目案例</a>
+        <a onclick="scrollToSection('hardware')">硬件产品</a>
+        <a onclick="scrollToSection('original')">原创设计</a>
+        <a onclick="scrollToSection('about')">关于我</a>
+      </div>
+    </nav>
 
-<!-- 第二页：3D旋转卡片环 - 透视版 -->
-<section class="scene-3d" id="scene">
-  <div class="scene-title">
-    <h3>核心能力</h3>
-    <p>全方位专业能力展示</p>
+    <!-- 首页 -->
+    <section class="hero" id="home">
+      <div class="hero-subtitle hero-animate subtitle">Professional Portfolio</div>
+      <h2 class="hero-animate title">市场产品经理<br>产品设计&解决方案</h2>
+      <p class="hero-animate desc">专注XR文旅数字化升级、智慧城市/校园等设计与AI产品解决方案，
+      擅长方案设计、需求梳理与高效商业表达。同时具有硬件产品经验落地经验。</p>
+      <div class="hero-btn-container hero-animate btn-group">
+        <a href="One.html" class="hero-btn">查看个人简历</a>
+        <a onclick="scrollToSection('projects')" class="hero-btn-secondary">浏览项目案例</a>
+      </div>
+    </section>
+
+    <!-- 核心能力 -->
+    <section class="scene-3d" id="scene">
+      <h3 class="section-title scroll-animate">核心能力</h3>
+      <div class="carousel-container scroll-animate">
+        <div class="carousel">
+          <div class="carousel-item"><div class="icon">📊</div><h4>方案设计</h4><p>顶层架构<br>业务规划<br>技术整合</p></div>
+          <div class="carousel-item"><div class="icon">📈</div><h4>PPT呈现</h4><p>价值表达<br>逻辑可视化<br>专业汇报</p></div>
+          <div class="carousel-item"><div class="icon">🎯</div><h4>需求分析</h4><p>客户沟通<br>痛点挖掘<br>需求转化</p></div>
+          <div class="carousel-item"><div class="icon">🚀</div><h4>项目推动</h4><p>资源协调<br>节点把控<br>成功签约</p></div>
+          <div class="carousel-item"><div class="icon">🤖</div><h4>AI场景</h4><p>应用设计<br>价值挖掘<br>方案创新</p></div>
+          <div class="carousel-item"><div class="icon">🏙️</div><h4>产品设计能力</h4><p>AXURE原型<br>需求调研<br>竞品分析</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 核心项目案例 -->
+    <section class="section" id="projects">
+      <h3 class="section-title scroll-animate">核心项目案例</h3>
+      <div class="card-grid">
+        <div class="general-card scroll-animate stagger-1" onclick="openPanel('projects', 0)">
+          <div class="general-card-img" style="background-image: url('images/project-1.jpg');"></div>
+          <div class="general-card-content">
+            <h4>洪崖洞XR文旅赋能</h4>
+            <p>XR数字化顶层方案设计</p>
+          </div>
+        </div>
+        <div class="general-card scroll-animate stagger-2" onclick="openPanel('projects', 1)">
+          <div class="general-card-img" style="background-image: url('images/project-2.jpg');"></div>
+          <div class="general-card-content">
+            <h4>西江千户苗寨XR方案</h4>
+            <p>全球首例VR/AR/MR一体规划</p>
+          </div>
+        </div>
+        <div class="general-card scroll-animate stagger-3" onclick="openPanel('projects', 2)">
+          <div class="general-card-img" style="background-image: url('images/project-3.jpg');"></div>
+          <div class="general-card-content">
+            <h4>三星堆MR沉浸式导览</h4>
+            <p>文物数字化+内容原创设计</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 硬件产品入口 -->
+    <section class="section" id="hardware">
+      <h3 class="section-title scroll-animate">硬件产品工作经验</h3>
+      <div class="hardware-entry-grid">
+        <div class="hardware-entry-card scroll-animate stagger-1" onclick="openPanel('hardware', 0)">
+          <h3>电子烟产品</h3>
+          <p>换弹式 · 一次性 · 合规产品</p>
+          <div class="enter-hint">点击查看详情 →</div>
+        </div>
+        <div class="hardware-entry-card scroll-animate stagger-2" onclick="openPanel('hardware', 1)">
+          <h3>智能矿山硬件</h3>
+          <p>人员定位 · 安全监测 · 智能终端</p>
+          <div class="enter-hint">点击查看详情 →</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 个人原创设计 -->
+    <section class="section" id="original">
+      <h3 class="section-title scroll-animate">个人原创设计</h3>
+      <div class="card-grid">
+        <div class="general-card scroll-animate stagger-1" onclick="openPanel('original', 0)">
+          <div class="general-card-img" style="background-image: url('images/original-1.jpg');"></div>
+          <div class="general-card-content">
+            <h4>猫咪智能AI加水器</h4>
+            <p>作品描述 / 设计思路 / 额外能力展示</p>
+          </div>
+        </div>
+        <div class="general-card scroll-animate stagger-2" onclick="openPanel('original', 1)">
+          <div class="general-card-img" style="background-image: url('images/original-2.jpg');"></div>
+          <div class="general-card-content">
+            <h4>灵感，跃然屏上</h4>
+            <p>作品描述 / 设计思路 / 额外能力展示</p>
+          </div>
+        </div>
+        <div class="general-card scroll-animate stagger-3" onclick="openPanel('original', 2)">
+          <div class="general-card-img" style="background-image: url('images/original-3.jpg');"></div>
+          <div class="general-card-content">
+            <h4>个人纪念网站</h4>
+            <p>作品描述 / 设计思路 / 额外能力展示</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 关于我 -->
+    <section class="section" id="about">
+      <h3 class="section-title scroll-animate">关于我</h3>
+      <div class="about-content">
+        <div class="about-item scroll-animate stagger-1">
+          <p>4 年软硬件 + 数字化复合型产品经验，横跨 To G/To B/To C 全场景</p>
+        </div>
+        <div class="about-item scroll-animate stagger-2">
+          <p>擅长商业方案 PPT、需求深度分析、项目落地与客户成交</p>
+        </div>
+        <div class="about-item scroll-animate stagger-3">
+          <p>具备硬件+软件+数字化三位一体解决方案能力</p>
+        </div>
+        <div class="about-item scroll-animate stagger-1">
+          <p>AIGC 全场景提效，擅长大模型 + 场景化应用</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>© 2026 One的作品集 · 售前产品经理</footer>
   </div>
-  
-  <div class="carousel-container">
-    <div class="carousel">
-      <div class="carousel-item">
-        <div class="icon">📊</div>
-        <h4>方案设计</h4>
-        <p>顶层架构设计<br>业务流程规划<br>技术方案整合</p>
-      </div>
-      <div class="carousel-item">
-        <div class="icon">📈</div>
-        <h4>PPT呈现</h4>
-        <p>商业价值表达<br>逻辑可视化<br>专业汇报材料</p>
-      </div>
-      <div class="carousel-item">
-        <div class="icon">🎯</div>
-        <h4>需求分析</h4>
-        <p>客户深度沟通<br>痛点精准挖掘<br>需求转化落地</p>
-      </div>
-      <div class="carousel-item">
-        <div class="icon">🚀</div>
-        <h4>项目推动</h4>
-        <p>资源协调推进<br>关键节点把控<br>成功签约落地</p>
-      </div>
-      <div class="carousel-item">
-        <div class="icon">🤖</div>
-        <h4>AI场景</h4>
-        <p>AI应用设计<br>场景价值挖掘<br>方案创新融合</p>
-      </div>
-      <div class="carousel-item">
-        <div class="icon">🏙️</div>
-        <h4>产品设计能力</h4>
-        <p>AXURE原型<br>需求调研<br>竞品分析</p>
-      </div>
+
+  <!-- 统一浮层 - 动态内容 -->
+  <div class="general-panel" id="generalPanel">
+    <div class="panel-header">
+      <div class="close-btn" onclick="closePanel()">← 关闭</div>
+      <h1 class="panel-title" id="panelTitle">标题</h1>
     </div>
-  </div>
-</section>
-
-<!-- 第三页：项目案例 -->
-<section class="section" id="projects">
-  <h3>核心项目案例（摘选，实际30+解决方案输出）</h3>
-
-  <div class="projects">
-    <div class="card" onclick="openModal(0)">
-      <img src="images/project-1.jpg" alt="项目封面">
-      <div class="card-content">
-        <h4>洪崖洞XR文旅赋能</h4>
-        <p>面向洪崖洞客户设计整体XR赋能数字化顶层方案</p>
-      </div>
-    </div>
-
-    <div class="card" onclick="openModal(1)">
-      <img src="images/project-2.jpg" alt="项目封面">
-      <div class="card-content">
-        <h4>西江千户苗寨景区XR数字化建设方案</h4>
-        <p>全球首例VR/MR/AR三段一起数字化架构规划</p>
-      </div>
-    </div>
-
-    <div class="card" onclick="openModal(2)">
-      <img src="images/project-3.jpg" alt="项目封面">
-      <div class="card-content">
-        <h4>三星堆博物馆MR沉浸式导览</h4>
-        <p>原创故事内容设计，文物数字化建模导览建设</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 第四页：关于我 -->
-<section class="section" id="about">
-  <h3>关于我</h3>
-  <div class="about-text">
-	<p>4 年软硬件 + 数字化复合型产品经验，横跨 To G/To B/To C 全场景，覆盖文旅数字化、消费电子、工业智能硬件三大领域，精通从需求分析、PRD 输出到产品落地迭代的全生命周期管理，可独立完成产品从 0 到 1 规划。 <p>
-    <p>擅长商业方案 PPT 设计与客户需求深度分析</p>
-    <p>具备从 0 到 1 完整项目落地与客户成交经验</p>
-    <p>全场景 AIGC 提效应用能力：精通 GPT-4o、Claude 3、文心一言等主流大模型，熟练掌握 Agent 定位与场景化应用，将 AI 能力深度融入产品设计、方案输出全流程</p>
-    <p>注重逻辑、价值呈现与高效的客户沟通表达</p>
-  </div>
-</section>
-
-<footer>
-  © 2026 售前产品经理作品集 | 专注企业数字化解决方案
-</footer>
-
-<!-- 模态框 -->
-<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
-  <div class="modal" onclick="event.stopPropagation()">
-    <div class="modal-header">
-      <!-- 轮播容器 -->
-      <div class="modal-carousel">
-        <!-- 图片列表 -->
-        <div class="carousel-slides" id="modalCarouselSlides"></div>
-        
-        <!-- 切换按钮 -->
-        <button class="carousel-btn carousel-prev" onclick="changeSlide(-1)">❮</button>
-        <button class="carousel-btn carousel-next" onclick="changeSlide(1)">❯</button>
-        
-        <!-- 轮播指示器 -->
-        <div class="carousel-indicators" id="modalCarouselIndicators"></div>
-      </div>
-      <button class="modal-close" onclick="closeModal()">×</button>
-    </div>
-    <div class="modal-body">
-      <h2 id="modalTitle">项目标题</h2>
-      
-      <div class="modal-section">
-        <h3>项目概述</h3>
-        <p id="modalOverview">项目概述内容</p>
-      </div>
-      
-      <div class="modal-section">
-        <h3>核心职责</h3>
-        <ul id="modalResponsibilities"></ul>
-      </div>
-      
-      <div class="modal-section">
-        <h3>项目成果</h3>
-        <p id="modalResults">项目成果内容</p>
-      </div>
-      
-      <div class="modal-section">
-        <h3>技术标签</h3>
-        <div class="modal-tags" id="modalTags"></div>
+    <div class="panel-content">
+      <div class="panel-showcase">
+        <div class="panel-image-large" id="panelImage"></div>
+        <div class="panel-info" id="panelInfo"></div>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-// 全局轮播变量
-let currentSlideIndex = 0;
-let currentProjectIndex = 0;
+// ====================== 数据配置 ======================
+const allData = {
+  projects: [
+    {
+      title: "洪崖洞MR赋能解决方案",
+      image: "images/project-1.jpg",
+      sections: [
+        { title: "项目概述", content: "为重庆洪崖洞国家级文旅地标设计沉浸式文旅数字化整体解决方案，涵盖 MR 虚实融合场景、AIGC 虚拟 IP 导览、沉浸式文化故事线三大核心板块，通过数字技术活化巴渝文化 IP，以数字化手段提升景区数字化水平与商业运营价值。" },
+        { title: "核心职责", content: ["负责项目整体顶层架构设计与技术方案规划，融合 AIGC、MR 空间定位、数字孪生等前沿技术", "主导景区管委会、文旅集团的全层级客户需求调研与核心痛点深度分析", "独立撰写完整的项目解决方案书与高层汇报 PPT", "主导多轮客户汇报、技术交流与方案迭代优化，推动项目签约与落地交付"], isList: true },
+        { title: "项目成果", content: "成功签约，成为重庆市文旅数字化标杆项目；落地后景区游客平均停留时长提升 40%，游客满意度提升 30%，景区二次访问率提升 25%" },
+        { title: "技术标签", content: ["XR", "文旅", "方案设计", "MR","产品内容设计"], isTags: true }
+      ]
+    },
+    {
+      title: "西江千户苗寨XR数字化方案",
+      image: "images/project-2.jpg",
+      sections: [
+        { title: "项目概述", content: "为西江千户苗寨国家级民族文旅 IP 设计乡村振兴 + 文旅融合数字化整体解决方案，涵盖 MR 民族剧本杀、AIGC 民族 IP 虚拟导游、沉浸式非遗互动体验、景区智慧运营管理四大核心板块，通过数字技术活化苗族非遗文化，提升景区服务水平与乡村文旅商业价值。" },
+        { title: "核心职责", content: ["负责项目整体顶层架构设计与技术方案规划，融合 AIGC、MR/AR、物联网等前沿技术", "主导景区运营方、当地文旅局的全层级需求调研与核心痛点深度分析", "撰写完整的项目解决方案书与高层汇报 PPT，适配民族文旅项目的政策与商业要求", "主导多轮客户汇报、技术交流与方案迭代，推动项目签约与落地交付"], isList: true },
+        { title: "项目成果", content: "入选国家级优秀案例，同时成为贵州省民族文旅数字化标杆项目；落地后景区游客平均停留时长提升 35%，非遗相关二次消费转化率提升 22%，游客满意度提升 28%，成为当地乡村文旅数字化示范案例。" },
+        { title: "技术标签", content: ["数字化文旅", "VR/AR/MR", "乡村振兴"], isTags: true }
+      ]
+    },
+    {
+      title: "三星堆博物馆MR沉浸式导览",
+      image: "images/project-3.jpg",
+      sections: [
+        { title: "项目概述", content: "为三星堆博物馆国家级文博 IP 设计文博数字化整体解决方案，涵盖 AR 文物虚实复原、AIGC 虚拟专家导览、沉浸式古蜀文化场景、智慧文博运营平台四大核心板块，通过数字技术降低古蜀文化传播门槛，提升文博展陈服务能力与游客互动体验。" },
+        { title: "核心职责", content: ["负责项目整体顶层架构设计与技术方案规划，融合 AIGC、AR 空间识别、数字内容生成等前沿技术", "主导博物馆策展团队、管理层、文旅主管部门的需求调研与痛点分析", "撰写完整的项目解决方案书与合规性汇报 PPT，适配文博系统汇报要求", "参与多轮客户汇报、技术答疑与方案优化，推动项目签约与落地交付"], isList: true },
+        { title: "项目成果", content: "央视报道、省级标杆，游客满意度大幅提升" },
+        { title: "技术标签", content: ["MR", "文博数字化", "文创", "内容设计"], isTags: true }
+      ]
+    }
+  ],
+  hardware: [
+    {
+      title: "电子烟产品",
+      image: "images/vape-1.jpg",
+      sections: [
+        { title: "产品定位", content: "中高端电子烟、换弹式、一次性、长续航、口感优化" },
+        { title: "负责内容", content: ["MRD/PRD设计", "ID规划选择", "结构定义", "功能规格", "供应链对接", "合规把控", "上市推广"], isList: true },
+        { title: "项目成果", content: "多款产品成功上市，客户销量稳定。" }
+      ]
+    },
+    {
+      title: "智能矿山硬件",
+      image: "images/mine-1.jpg",
+      sections: [
+        { title: "产品方向", content: "矿山安全提醒、安全监测、环境采集、智能终端、通信基站" },
+        { title: "负责内容", content: ["需求调研", "硬件规格", "功能定义", "对接矿方", "联调测试", "方案交付"], isList: true },
+        { title: "项目成果", content: "成功设计多个矿山用产品，通过安全认证，提升矿山智能化水平" }
+      ]
+    }
+  ],
+  original: [
+    {
+      title: "个人生活AI设计-猫咪智能AI加水器",
+      image: "images/original-1.jpg",
+      sections: [
+        { title: "设计理念", content: "无接触式智能宠物饮水机" },
+        { title: "作品亮点", content: ["创新交互", "无任何带电部件浸入水中", "非接触式自动补水"], isList: true },
+        { title: "应用场景", content: "宠物想喝水但蓄水不及时的问题" }
+      ]
+    },
+    {
+      title: "灵感，跃然屏上",
+      image: "images/original-2.jpg",
+      sections: [
+        { title: "设计理念", content: "无论是课堂学习、商务会议还是艺术创作，AI Write Pro 都能完美融入你的工作流。" },
+        { title: "作品亮点", content: ["极简设计", "薄如蝉翼", "坚如磐石", "AI AGENT"], isList: true },
+        { title: "应用场景", content: "手写内容实时OCR转文本，一键生成思维导图。选中关键词，AI自动为你拓展背景资料。" }
+      ]
+    },
+    {
+      title: "个人纪念网站",
+      image: "images/original-3.jpg",
+      sections: [
+        { title: "设计理念", content: "甜蜜回忆纪念，个人情感纪念" },
+        { title: "作品亮点", content: ["未来感", "创新性", "技术融合"], isList: true },
+        { title: "应用场景", content: "世界上最美好的事情，莫过于和你一起度过的每一个平凡瞬间" }
+      ]
+    }
+  ]
+};
 
-// 项目数据（所有内容都在这里改！）
-const projectsData = [
-  {
-    title: "洪崖洞MR赋能解决方案",
-    images: [
-      "images/project-1.jpg",
-      "images/project-1-2.jpg",
-      "images/project-1-3.jpg"
-    ],
-    overview: "为洪崖洞设计沉浸式游玩解决方案，融合 MR 虚实场景、沉浸式文化故事线板块，通过XR文旅赋能巴渝文化 IP刺激洪崖洞新型消费升级。",
-    responsibilities: [
-      "负责产品方案输出，通过MR 空间定位、数字孪生等前沿技术",
-      "主导客户需求调研与痛点分析",
-      "撰写完整的项目方案书与汇报PPT",
-      "参与多轮客户汇报与技术交流"
-    ],
-    results: "项目成功上线",
-    tags: ["XR新型旅游体验", "产品规划", "方案输出", "顶层设计"]
-  },
-  {
-    title: "西江千户苗寨民族文旅融合数字化整体解决方案项目",
-    images: [
-      "images/project-2.jpg",
-      "images/project-2-2.jpg",
-      "images/project-2-3.jpg"
-    ],
-    overview: "为西江千户苗寨国家级民族文旅 IP 设计乡村振兴 + 文旅融合数字化整体解决方案，涵盖 MR剧本啥、VR/AR沉浸式非遗互动体验，通过数字技术活化苗族非遗文化，提升景区服务水平与乡村文旅商业价值。",
-    responsibilities: [
-      "负责项目整体顶层架构设计与技术方案规划，融合VR/MR/AR等前沿技术",
-      "撰写完整的项目解决方案书与高层汇报 PPT，适配民族文旅项目的政策与商业要求",
-      "主导多轮客户汇报、技术交流与方案迭代，推动项目签约与落地交付",
-      "参与景区运营方、当地文旅局的全层级需求调研与核心痛点深度分析"
-    ],
-    results: "成功入选省级数字化文旅标杆案例。",
-    tags: ["数字化文旅", "VR", "AR", "MR", "虚实结合"]
-  },
-  {
-    title: "三星堆博物馆 MR 沉浸式文博数字化整体解决方案项目",
-    images: [
-      "images/project-3.jpg",
-      "images/project-3-2.jpg",
-      "images/project-3-3.jpg"
-    ],
-    overview: "为三星堆博物馆国家级文博 IP 设计文博数字化整体解决方案，涵盖 MR 文物虚实复原、虚拟专家导览、沉浸式古蜀文化场景、智慧文博运营平台四大核心板块，通过数字技术降低古蜀文化传播门槛，提升文博展陈服务能力与游客互动体验。",
-    responsibilities: [
-      "负责项目整体顶层架构设计与技术方案规划，融合XR 空间识别、数字内容生成等前沿技术",
-      "主导博物馆策展团队、管理层、文旅主管部门的需求调研与痛点分析",
-      "撰写产品方案与商业价值分析报告",
-      "参与多轮客户汇报、技术答疑与方案优化，推动项目签约与落地交付"
-    ],
-    results: "四川省文博数字化标杆案例，入选中央电视台“非凡十年”优秀作品",
-    tags: ["三星堆", "MR导览", "文博升级", "方案输出", "产品内容设计"]
-  }
-];
+// ====================== 粒子背景（新增视差滚动支持） ======================
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let time = 0;
+let scrollOffset = 0; // 新增：滚动偏移量，用于视差效果
+const colorList = ['#99CDD8', '#DAEBE3', '#FDE8D3', '#F3C3B2', '#DFD6C4'];
 
-// 打开模态框
-function openModal(index) {
-  currentProjectIndex = index;
-  currentSlideIndex = 0;
-  const project = projectsData[index];
-  
-  // 填充基础内容
-  document.getElementById('modalTitle').textContent = project.title;
-  document.getElementById('modalOverview').textContent = project.overview;
-  document.getElementById('modalResults').textContent = project.results;
-  
-  // 填充职责列表
-  const responsibilitiesList = document.getElementById('modalResponsibilities');
-  responsibilitiesList.innerHTML = '';
-  project.responsibilities.forEach(item => {
-    const li = document.createElement('li');
-    li.textContent = item;
-    responsibilitiesList.appendChild(li);
-  });
-  
-  // 填充标签
-  const tagsContainer = document.getElementById('modalTags');
-  tagsContainer.innerHTML = '';
-  project.tags.forEach(tag => {
-    const tagElement = document.createElement('span');
-    tagElement.className = 'tag';
-    tagElement.textContent = tag;
-    tagsContainer.appendChild(tagElement);
-  });
-  
-  // 渲染轮播图
-  renderCarousel(project.images);
-  
-  // 显示模态框
-  document.getElementById('modalOverlay').classList.add('active');
-  document.body.style.overflow = 'hidden';
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 }
 
-// 渲染轮播图
-function renderCarousel(images) {
-  const slidesContainer = document.getElementById('modalCarouselSlides');
-  const indicatorsContainer = document.getElementById('modalCarouselIndicators');
-  
-  // 清空原有内容
-  slidesContainer.innerHTML = '';
-  indicatorsContainer.innerHTML = '';
-  
-  // 生成轮播图片和指示器
-  images.forEach((imgSrc, idx) => {
-    // 图片slide
-    const slide = document.createElement('div');
-    slide.className = `carousel-slide ${idx === 0 ? 'active' : ''}`;
-    slide.innerHTML = `<img src="${imgSrc}" alt="项目图片${idx+1}">`;
-    slidesContainer.appendChild(slide);
-    
-    // 指示器dot
-    const dot = document.createElement('div');
-    dot.className = `indicator-dot ${idx === 0 ? 'active' : ''}`;
-    dot.onclick = () => goToSlide(idx);
-    indicatorsContainer.appendChild(dot);
-  });
-
-  // 如果只有1张图片，隐藏切换按钮和指示器
-  const carouselBtns = document.querySelectorAll('.carousel-btn');
-  const indicators = document.querySelector('.carousel-indicators');
-  if (images.length <= 1) {
-    carouselBtns.forEach(btn => btn.style.display = 'none');
-    indicators.style.display = 'none';
-  } else {
-    carouselBtns.forEach(btn => btn.style.display = 'block');
-    indicators.style.display = 'flex';
+// 粒子创建时固定颜色，避免频闪
+function createParticles() {
+  particles = [];
+  const numParticles = 50;
+  for (let i = 0; i < numParticles; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      originY: Math.random() * canvas.height, // 新增：原始Y坐标，用于视差计算
+      vx: (Math.random() - 0.5) * 0.15,
+      vy: (Math.random() - 0.5) * 0.15,
+      radius: Math.random() * 120 + 60,
+      color: colorList[Math.floor(Math.random() * colorList.length)],
+      alpha: Math.random() * 0.06 + 0.03
+    });
   }
 }
 
-// 切换轮播图（上一张/下一张）
-function changeSlide(direction) {
-  const project = projectsData[currentProjectIndex];
-  const totalSlides = project.images.length;
+function animateBackground() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   
-  currentSlideIndex = (currentSlideIndex + direction + totalSlides) % totalSlides;
-  goToSlide(currentSlideIndex);
-}
+  // 固定渐变底色
+  const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+  gradient.addColorStop(0, '#FDE8D3');
+  gradient.addColorStop(0.5, '#DAEBE3');
+  gradient.addColorStop(1, '#99CDD8');
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-// 跳转到指定轮播图
-function goToSlide(index) {
-  const project = projectsData[currentProjectIndex];
-  const totalSlides = project.images.length;
-  
-  // 边界处理
-  if (index < 0) index = totalSlides - 1;
-  if (index >= totalSlides) index = 0;
-  
-  currentSlideIndex = index;
-  
-  // 更新slide显示状态
-  const slides = document.querySelectorAll('.carousel-slide');
-  slides.forEach((slide, idx) => {
-    slide.classList.toggle('active', idx === currentSlideIndex);
+  // 粒子运动+视差效果：滚动时粒子Y轴缓慢移动
+  time += 0.001;
+  particles.forEach((p, i) => {
+    p.x += p.vx + Math.sin(time + i * 0.3) * 0.1;
+    // 视差核心：滚动偏移量 * 0.1，粒子移动速度仅为内容的1/10，形成视差
+    p.y = p.originY + p.vy * time + Math.cos(time + i * 0.3) * 0.1 + scrollOffset * 0.1;
+
+    // 边界回弹
+    if (p.x < -p.radius) p.x = canvas.width + p.radius;
+    if (p.x > canvas.width + p.radius) p.x = -p.radius;
+    if (p.y < -p.radius) p.y = canvas.height + p.radius;
+    if (p.y > canvas.height + p.radius) p.y = -p.radius;
+
+    // 固定颜色绘制
+    const radialGradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
+    radialGradient.addColorStop(0, `${p.color}${Math.floor(p.alpha * 255).toString(16).padStart(2, '0')}`);
+    radialGradient.addColorStop(1, 'transparent');
+    ctx.fillStyle = radialGradient;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+    ctx.fill();
   });
-  
-  // 更新指示器状态
-  const dots = document.querySelectorAll('.indicator-dot');
-  dots.forEach((dot, idx) => {
-    dot.classList.toggle('active', idx === currentSlideIndex);
+
+  requestAnimationFrame(animateBackground);
+}
+
+// ====================== 新增：滚动动画监听 ======================
+const mainPage = document.getElementById('mainPage');
+const scrollProgress = document.getElementById('scrollProgress');
+const mainNav = document.getElementById('mainNav');
+const animateElements = document.querySelectorAll('.scroll-animate');
+
+// 元素进入视口触发动画
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('active');
+    }
   });
-}
-
-// 关闭模态框
-function closeModal(event) {
-  if (event && event.target !== event.currentTarget) return;
-  document.getElementById('modalOverlay').classList.remove('active');
-  document.body.style.overflow = '';
-}
-
-// ESC键关闭
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeModal();
+}, {
+  root: mainPage, // 滚动容器是mainPage
+  rootMargin: '0px 0px -10% 0px', // 元素进入视口10%时触发
+  threshold: 0
 });
+
+// 给所有需要动画的元素绑定监听
+animateElements.forEach(el => observer.observe(el));
+
+// 滚动事件监听：进度条、导航变化、视差偏移
+mainPage.addEventListener('scroll', () => {
+  const scrollTop = mainPage.scrollTop;
+  const scrollHeight = mainPage.scrollHeight - mainPage.clientHeight;
+  const scrollPercent = (scrollTop / scrollHeight) * 100;
+
+  // 更新滚动进度条
+  scrollProgress.style.width = `${scrollPercent}%`;
+
+  // 更新导航栏样式
+  if (scrollTop > 50) {
+    mainNav.classList.add('scrolled');
+  } else {
+    mainNav.classList.remove('scrolled');
+  }
+
+  // 更新视差滚动偏移量
+  scrollOffset = scrollTop;
+});
+
+// ====================== 平滑滚动 ======================
+function scrollToSection(id) {
+  const element = document.getElementById(id);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+// ====================== 统一浮层控制 ======================
+const generalPanel = document.getElementById('generalPanel');
+let currentType = '';
+let currentIndex = 0;
+
+function openPanel(type, index) {
+  currentType = type;
+  currentIndex = index;
+  
+  const data = allData[type][index];
+  
+  // 设置标题
+  document.getElementById('panelTitle').innerText = data.title;
+  
+  // 设置图片
+  document.getElementById('panelImage').style.backgroundImage = `url('${data.image}')`;
+  
+  // 生成内容区块
+  const infoContainer = document.getElementById('panelInfo');
+  infoContainer.innerHTML = '';
+  
+  data.sections.forEach(section => {
+    const sectionDiv = document.createElement('div');
+    sectionDiv.className = 'panel-section';
+    
+    const title = document.createElement('h4');
+    title.innerText = section.title;
+    sectionDiv.appendChild(title);
+    
+    if (section.isList) {
+      const ul = document.createElement('ul');
+      section.content.forEach(item => {
+        const li = document.createElement('li');
+        li.innerText = item;
+        ul.appendChild(li);
+      });
+      sectionDiv.appendChild(ul);
+    } else if (section.isTags) {
+      const tagsDiv = document.createElement('div');
+      tagsDiv.className = 'tags-container';
+      section.content.forEach(tag => {
+        const tagSpan = document.createElement('span');
+        tagSpan.className = 'tag';
+        tagSpan.innerText = tag;
+        tagsDiv.appendChild(tagSpan);
+      });
+      sectionDiv.appendChild(tagsDiv);
+    } else {
+      const p = document.createElement('p');
+      p.innerText = section.content;
+      sectionDiv.appendChild(p);
+    }
+    
+    infoContainer.appendChild(sectionDiv);
+  });
+  
+  // 显示浮层
+  mainPage.classList.add('back');
+  generalPanel.classList.add('active');
+}
+
+function closePanel() {
+  mainPage.classList.remove('back');
+  generalPanel.classList.remove('active');
+}
+
+// ESC 键关闭
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closePanel();
+  }
+});
+
+// 初始化
+window.addEventListener('resize', () => {
+  resizeCanvas();
+  createParticles();
+});
+
+resizeCanvas();
+createParticles();
+animateBackground();
 </script>
 
 </body>
