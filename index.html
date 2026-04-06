@@ -839,6 +839,7 @@ const allData = {
     {
       title: "个人生活AI设计-猫咪智能AI加水器",
       image: "images/original-1.jpg",
+      url: "https://taeyeonone.github.io/MIAOKT.com",
       sections: [
         { title: "设计理念", content: "无接触式智能宠物饮水机" },
         { title: "作品亮点", content: ["创新交互", "无任何带电部件浸入水中", "非接触式自动补水"], isList: true },
@@ -848,6 +849,7 @@ const allData = {
     {
       title: "灵感，跃然屏上",
       image: "images/original-2.jpg",
+      url: "https://taeyeonone.github.io/AIWRITE",
       sections: [
         { title: "设计理念", content: "无论是课堂学习、商务会议还是艺术创作，AI Write Pro 都能完美融入你的工作流。" },
         { title: "作品亮点", content: ["极简设计", "薄如蝉翼", "坚如磐石", "AI AGENT"], isList: true },
@@ -1004,6 +1006,22 @@ function openPanel(type, index) {
   // 生成内容区块
   const infoContainer = document.getElementById('panelInfo');
   infoContainer.innerHTML = '';
+// 如果有 url，自动加跳转按钮
+if (data.url) {
+  const btn = document.createElement('a');
+  btn.href = data.url;
+  btn.target = '_blank';
+  btn.style.display = 'inline-block';
+  btn.style.marginTop = '20px';
+  btn.style.padding = '14px 28px';
+  btn.style.background = '#99CDD8';
+  btn.style.color = '#fff';
+  btn.style.borderRadius = '14px';
+  btn.style.textDecoration = 'none';
+  btn.style.fontSize = '18px';
+  btn.innerText = '前往官网';
+  infoContainer.appendChild(btn);
+}
   
   data.sections.forEach(section => {
     const sectionDiv = document.createElement('div');
